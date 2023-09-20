@@ -1,0 +1,14 @@
+// Define a function that takes a table and a column name as parameters
+let
+    DeleteNullColumn = (table as table, column as text) =>
+    let
+        // Check if the column has any non-null values
+        HasNonNull = List.NonNullCount(Table.Column(table, column)) > 0,
+        // If yes, return the original table
+        Result = if HasNonNull then table else
+        // If no, remove the column from the table
+        Table.RemoveColumns(table, {column})
+    in
+        Result
+in
+    DeleteNullColumn
